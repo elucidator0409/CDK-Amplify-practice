@@ -1,0 +1,26 @@
+
+@url = https://jrxivr4nz9.execute-api.ap-southeast-2.amazonaws.com/prod/
+
+@token = eyJraWQiOiJKWjF4MzRTNjRvZEY0STNuZ0Y0ZkN1SmhDQURpdzV3Y0c0SGYrK0FoQit3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJmOWJlMjQyOC0zMGUxLTcwOGQtM2I0ZC1iZmVkNDdhMTAwODkiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTJfU2lGVVRoOTV4IiwiY29nbml0bzp1c2VybmFtZSI6ImVsdWNpZGF0b3IiLCJvcmlnaW5fanRpIjoiMjMzNGM2MGItYjE1Yi00M2NiLTlkNzEtMTFlN2QzYTc2MjRiIiwiYXVkIjoiNmVlOWRtbnI4Z3U5YzlxOHZyanY4ZDBkNXIiLCJldmVudF9pZCI6Ijg2Nzk4OTY2LTdjNWYtNGE5Yi1hNmJmLTg3NDI1ZDA2ODkzZSIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzQzNTA5NDY3LCJleHAiOjE3NDM1MTMwNjcsImlhdCI6MTc0MzUwOTQ2NywianRpIjoiMzcyZWY3YjAtNzA0Yi00NjA1LTliYjgtYTkwODAxYzZkNDU2IiwiZW1haWwiOiJlbHVjaWRhdG9yMDQwOUBnbWFpbC5jb20ifQ.RI-eYhcy3ecRfke5-iu1vZXKsvi4RS3StuN7r5FqsmPgVksBjo8X6lWmmgb4WXYF75lYfEGJo0_9fXeBGRShta0cViLG76NtoOAOzozjASOAijsOsKH7dXs1TkaMLGJqsU7ASAzyd-IPL4DPWKQdy9Eo9V8e1ubfiy1HjLGxK-0IUg7lqX7dO9GeCBUnWhaLRswruwZvDeQ4wy-mxnQZ3e_4C4z0VYGFMVxgHQjQQd4vEhYkaEBXI0LyZIY_tXooKfM2gW65L3YuTuk2sG5RP5omjFIqCcwfVtXFx4ZVlXNKWAxSSjCMddIXXCm3xWh5KLyotZZXN-p5YN4gm8QL2Q
+
+GET {{url}}/space
+Authorization:  {{token}}
+###
+POST https://jrxivr4nz9.execute-api.ap-southeast-2.amazonaws.com/prod/space
+Content-Type: application/json
+
+{
+  "location": "Paris",
+  "name": "Best Location"
+}
+
+###
+DELETE  https://jrxivr4nz9.execute-api.ap-southeast-2.amazonaws.com/prod/space
+
+###
+PUT https://jrxivr4nz9.execute-api.ap-southeast-2.amazonaws.com/prod/space
+Content-Type: application/json
+
+{
+  "location": "Paris2"
+}

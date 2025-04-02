@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug local file ",
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${workspaceFolder}/test/auth.test.ts"
+
+      ],
+    
+     
+      "env": {
+        "AWS_REGION": "ap-southeast-2",
+        "TABLE_NAME": "SpacesStack-0af852f17239"
+      }
+    }
+  ]
+}
