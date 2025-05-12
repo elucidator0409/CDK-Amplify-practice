@@ -1,5 +1,5 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { AuthorizationType, CognitoUserPoolsAuthorizer, LambdaIntegration, MethodOptions, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { AuthorizationType, CognitoUserPoolsAuthorizer, Cors, LambdaIntegration, MethodOptions, ResourceOptions, RestApi } from 'aws-cdk-lib/aws-apigateway';
 import { IUserPool } from 'aws-cdk-lib/aws-cognito';
 import { Construct } from 'constructs';
 
@@ -12,7 +12,14 @@ export class ApiStack extends Stack {
     constructor(scope: Construct, id: string, props: ApiStackProps) {
         super(scope, id, props);
 
-        const api = new RestApi(this, 'SpaceApi');
+        const api = new RestApi(this, 'SpaceApi',{
+            defaultCorsPreflightOptions: {
+                allowOrigins: Cors.ALL_ORIGINS, 
+                allowMethods: Cors.ALL_METHODS,
+                allowHeaders: ['Content-Type', 'Authorization', 'X-Amz-Date', 'X-Api-Key', 'X-Amz-Security-Token'],
+                allowCredentials: true
+            }
+        });
 
 
         const authorizer = new CognitoUserPoolsAuthorizer(this, 'SpaceApiAuthorizer', {
@@ -28,6 +35,13 @@ export class ApiStack extends Stack {
             },
 
         };
+
+        const optionsWithCors: ResourceOptions = {
+            defaultCorsPreflightOptions: {
+                allowOrigins: Cors.ALL_ORIGINS,
+                allowMethods: Cors.ALL_METHODS, 
+            }
+        }
 
 
         const spaceResource = api.root.addResource('space');

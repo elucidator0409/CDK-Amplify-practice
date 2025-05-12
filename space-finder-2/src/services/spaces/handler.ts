@@ -5,27 +5,49 @@ import { getSpaces } from "./GetSpaces";
 import { updateSpaces } from "./UpdateSpaces";
 import { deleteSpaces } from "./DeleteSpaces";
 import { JSONError, MissingFieldError } from "../shared/Validator";
+import { addCorsHeaders } from "../shared/Utils";
 
 const ddbClient = new DynamoDBClient();
 async function handler(event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> {
 
-    let message : string;
+    let message: string = '';
+    let response: APIGatewayProxyResult = {
+        statusCode: 200,
+        body: JSON.stringify(message),
+    };
+
+    // Xử lý preflight request OPTIONS
+    if (event.httpMethod === 'OPTIONS') {
+        const response = {
+            statusCode: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
+            },
+            body: ''
+        };
+        return response;
+    }
+    
     try {
         switch (event.httpMethod) {
             case 'GET':
                 const getResponse =await getSpaces(event, ddbClient);
-                return getResponse;
+                response = getResponse;
+                break
             case 'POST':       
                 const postResponse =await postSpaces(event, ddbClient);
-                return postResponse; 
+                response = postResponse;
+                break 
             case 'PUT':       
                 const putResponse =await updateSpaces(event, ddbClient);
-                console.log('putResponse', putResponse);
-                return putResponse;  
+                response = putResponse;
+                break
             case 'DELETE':       
                 const deleteResponse =await deleteSpaces(event, ddbClient);
-                console.log('deleteResponse', deleteResponse);
-                return deleteResponse;
+                response = deleteResponse;
+                break
             default:
                 message = 'Unsupported HTTP method';
                 break;
@@ -55,13 +77,9 @@ async function handler(event: APIGatewayProxyEvent, context: Context): Promise<A
     }
 
 
-  const response: APIGatewayProxyResult = {
-    statusCode: 200,
-    body: JSON.stringify(message),
-  };
-  console.log(event);
-
-  return response;
+  
+  
+  return addCorsHeaders(response);
 }
 
 export { handler };
