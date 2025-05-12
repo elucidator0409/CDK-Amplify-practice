@@ -1,11 +1,22 @@
 import { v4 } from "uuid";
 import { JSONError } from "./Validator";
 import { randomUUID } from "crypto";
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
 
 export function createRandomId(){
     return randomUUID();
+}
+
+export function addCorsHeaders(arg: APIGatewayProxyResult){
+    if(!arg.headers) {
+        arg.headers = {};
+    }
+    arg.headers["Access-Control-Allow-Origin"] = "*";
+    arg.headers["Access-Control-Allow-Methods"] = "*";
+    arg.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token';
+
+    return arg;
 }
 
 
